@@ -30,21 +30,6 @@ public class PersistDDBB {
         return conn;
     }
 
-    /*
-     * public Connection connect() {
-     * Connection conn = null;
-     * String password = "EXwd3ary(J#";
-     * try {
-     * Class.forName("com.mysql.cj.jdbc.Driver");
-     * conn = DriverManager.getConnection(
-     * "jdbc:mysql://localhost:3306/db_bank?useSSL=false","root",password);
-     * } catch (ClassNotFoundException | SQLException e) {
-     * System.out.println("Cannot connect to database");
-     * }
-     * return conn;
-     * }
-     */
-
     public ArrayList<HashMap> executeSelectSQL(String sqlQuery) {
         try {
             Statement stmt = this.connection.createStatement();

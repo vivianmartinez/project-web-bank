@@ -1,5 +1,4 @@
 model\dao\Dao.class
-config\ConnectionDDBB.class
 config\PersistDDBB.class
 controller\Controller.class
 servlets\ControllerServlet.class
