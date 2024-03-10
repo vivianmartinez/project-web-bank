@@ -1,7 +1,8 @@
 <%@include file="header.jsp" %>
+<%@ page import="model.entity.User"%>
 <main>
-    <% String email_user = (String) session.getAttribute("email");
-    out.print(email_user);
+    <% User  currentUser = (User) session.getAttribute("currentUser");
+    out.print(currentUser.getName());
     %>
     <%@include file="menu.jsp" %>
     Home

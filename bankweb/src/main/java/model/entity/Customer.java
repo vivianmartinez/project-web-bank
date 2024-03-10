@@ -1,6 +1,7 @@
 package model.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Customer extends Entity {
     private int id;
@@ -13,12 +14,13 @@ public class Customer extends Entity {
     private String password;
     private LocalDate created_at;
     private LocalDate updated_at;
+    private ArrayList<Account> accounts;
 
     public Customer() {
     }
 
     public Customer(int id, String dni, String name, String last_name, String city, LocalDate date_birth, String email,
-            String password, LocalDate created_at, LocalDate updated_at) {
+            String password, LocalDate created_at, LocalDate updated_at, ArrayList<Account> accounts) {
         this.id = id;
         this.dni = dni;
         this.name = name;
@@ -29,6 +31,7 @@ public class Customer extends Entity {
         this.password = password;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.accounts = accounts;
     }
 
     public Customer(String dni, String name, String last_name, String city, LocalDate date_birth, String email,
@@ -122,6 +125,14 @@ public class Customer extends Entity {
         this.updated_at = updated_at;
     }
 
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    public void setAccounts(ArrayList<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -135,8 +146,8 @@ public class Customer extends Entity {
                 ", password='" + getPassword() + "'" +
                 ", created_at='" + getCreated_at() + "'" +
                 ", updated_at='" + getUpdated_at() + "'" +
+                ", accounts='" + getAccounts() + "'" +
                 "}";
     }
 
 }
-

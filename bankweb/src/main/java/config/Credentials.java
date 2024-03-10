@@ -17,10 +17,10 @@ public class Credentials {
     }
 
     public void getCredentialsProperties() {
-        String filePath = System.getProperty("user.dir") + "\\web-bank\\config\\credentials.properties";
+        // String filePath = System.getProperty("user.dir") +
+        // "\\web-bank\\config\\credentials.properties";
 
-        // String filePath =
-        // "C:\\Users\\Usuario\\workspace\\project-web-bank\\config\\credentials.properties";
+        String filePath = "C:\\Users\\Usuario\\workspace\\project-web-bank\\config\\credentials.properties";
         try {
             FileInputStream file = new FileInputStream(filePath);
             try {

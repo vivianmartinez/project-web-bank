@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import model.entity.Entity;
 
 public interface Controller {
@@ -8,5 +10,5 @@ public interface Controller {
 
     public ArrayList<Entity> list();
 
-    public ArrayList<Entity> getOne();
+    public Entity getOne(HashMap params);
 }

@@ -3,7 +3,11 @@ html {
     position: relative;
 }
 
-
 .wfooter {
     width: 100%;
+}
+
+.ms-1.d-none.d-sm-inline {
+    font-weight: 600;
+    font-size: 17px;
 }

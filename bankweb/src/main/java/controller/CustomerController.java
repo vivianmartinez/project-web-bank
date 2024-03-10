@@ -1,8 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.dao.CustomerDAO;
+import model.entity.Account;
+import model.entity.Customer;
 import model.entity.Entity;
 
 public class CustomerController implements Controller {
@@ -10,8 +13,7 @@ public class CustomerController implements Controller {
 
     @Override
     public void create(Entity entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+
     }
 
     @Override
@@ -21,7 +23,7 @@ public class CustomerController implements Controller {
     }
 
     @Override
-    public ArrayList<Entity> getOne() {
+    public Entity getOne(HashMap params) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOne'");
     }

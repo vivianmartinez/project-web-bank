@@ -3,9 +3,10 @@ package utilities;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.HashMap;
-
 import model.entity.Customer;
+import model.entity.User;
 
 public class Utilities {
     /**
@@ -51,5 +52,23 @@ public class Utilities {
                 hash.get("city").toString(),
                 hash.get("date_birth") == null ? dateB : convertStringToLocalDate(hash.get("date_birth").toString()),
                 hash.get("email").toString(), hash.get("password").toString());
+    }
+
+    /**
+     * Convertir hashMap a Usuario
+     * 
+     * @Autor Vivian Martínez
+     * @param hash
+     * @return Usuario
+     */
+    public static User userFromHash(@SuppressWarnings("rawtypes") HashMap hash) {
+        return new User(hash.get("name").toString(), hash.get("email").toString(), hash.get("password").toString());
+    }
+
+    public static long generateAccountNumber(ArrayList<HashMap> data) {
+        String generate_account_number = data.get(0).get("account_number").toString();
+        long account_number = Long.parseLong(generate_account_number) + 1;
+        // long account_number = 12345495995L;
+        return account_number;
     }
 }

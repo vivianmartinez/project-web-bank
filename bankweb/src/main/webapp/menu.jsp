@@ -31,6 +31,9 @@
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Cuentas</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100">
+                                <a href="index?page=account&action=create" class="nav-link px-0"> <span class="d-none d-sm-inline">Nueva Cuenta</span></a>
+                            </li>
+                            <li class="w-100">
                                 <a href="index?page=account&action=list" class="nav-link px-0"> <span class="d-none d-sm-inline">Listado</span></a>
                             </li>
                             <li>

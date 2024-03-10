@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import controller.AccountController;
 import controller.CustomerController;
 import utilities.Utilities;
 import jakarta.servlet.RequestDispatcher;
@@ -19,6 +20,7 @@ import model.entity.Entity;
 public class ControllerServlet extends HttpServlet {
 
     private CustomerController customerController = new CustomerController();
+    private AccountController accountController = new AccountController();
 
     @override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,12 +36,16 @@ public class ControllerServlet extends HttpServlet {
                     dispatcher = request.getRequestDispatcher("/home.jsp");
                     break;
                 case "create":
-                    System.out.println("create something " + routeController);
+                    dispatcher = request.getRequestDispatcher(routeController + "/create.jsp");
                     break;
                 case "list":
-                    ArrayList<Entity> customers = customerController.list();
-                    request.setAttribute("routeController", routeController);
-                    request.setAttribute("customers_list", customers);
+                    if (routeController.equals("customer")) {
+                        ArrayList<Entity> customers = customerController.list();
+                        request.setAttribute("customers_list", customers);
+                    } else if (routeController.equals("account")) {
+                        ArrayList<Entity> accounts = accountController.list();
+                        request.setAttribute("account_list", accounts);
+                    }
                     dispatcher = request.getRequestDispatcher(routeController + "/list.jsp");
                     break;
                 case "admin":
