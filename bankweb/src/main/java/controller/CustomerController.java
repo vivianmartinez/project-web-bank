@@ -2,11 +2,9 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import model.dao.CustomerDAO;
-import model.entity.Account;
-import model.entity.Customer;
 import model.entity.Entity;
+import utilities.Utilities;
 
 public class CustomerController implements Controller {
     private CustomerDAO customerDAO = new CustomerDAO();
@@ -24,8 +22,11 @@ public class CustomerController implements Controller {
 
     @Override
     public Entity getOne(HashMap params) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOne'");
+        ArrayList<HashMap> find = this.customerDAO.findBy(params);
+        if(find.size() > 0){
+            return Utilities.customerFromHash(find.get(0));
+        }
+        return null;
     }
 
 }

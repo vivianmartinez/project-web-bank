@@ -2,7 +2,6 @@ package model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import config.PersistDDBB;
 import model.entity.Account;
 import model.entity.Customer;
@@ -26,16 +25,21 @@ public class AccountDAO implements Dao {
 
     @Override
     public ArrayList<Entity> findAll() {
-        String sqlQuery = "SELECT * FROM account";
+        String sqlQuery = "SELECT * FROM account ORDER BY id DESC";
         ArrayList<Entity> aEntity = new ArrayList<>();
         // convierto el array de hashMap en array de entidades
         ArrayList<HashMap> result = this.persistDDBB.executeSelectSQL(sqlQuery);
         // convert values of array to entity
         for (int i = 0; i < result.size(); i++) {
-            Customer c = Utilities.customerFromHash(result.get(i));
-            aEntity.add(c);
+            Account a = Utilities.accountFromHash(result.get(i));
+            aEntity.add(a);
         }
         return aEntity;
+    }
+
+    public ArrayList<HashMap> findAllJoin(){
+        String sqlQuery = "SELECT *,c.dni,c.name,c.last_name,tc.type_account  FROM account a INNER JOIN customer c ON c.id = a.customer_id INNER JOIN type_account tc ON tc.id = a.type_account_id ORDER BY a.id DESC";
+        return this.persistDDBB.executeSelectSQL(sqlQuery);
     }
 
     @Override

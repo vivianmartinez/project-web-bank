@@ -4,21 +4,24 @@ public class User extends Entity {
     private int id;
     private String name;
     private String email;
+    private String role;
     private String password;
 
     public User() {
     }
 
-    public User(int id, String name, String email, String password) {
+    public User(int id, String name, String email, String role, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.role = role;
         this.password = password;
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String role, String password) {
         this.name = name;
         this.email = email;
+        this.role = role;
         this.password = password;
     }
 
@@ -46,6 +49,14 @@ public class User extends Entity {
         this.email = email;
     }
 
+    public String getRole() {
+        return this.role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getPassword() {
         return this.password;
     }
@@ -57,10 +68,13 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "{" +
-                " id='" + getId() + "'" +
-                ", name='" + getName() + "'" +
-                ", email='" + getEmail() + "'" +
-                ", password='" + getPassword() + "'" +
-                "}";
+            " id='" + getId() + "'" +
+            ", name='" + getName() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", role='" + getRole() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
     }
+
+   
 }

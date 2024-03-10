@@ -1,3 +1,7 @@
+<%@ page import="model.entity.User"%>
+<% 
+    User  currentUser = (User) session.getAttribute("currentUser");
+%>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -41,6 +45,24 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- si es administrador puede administrar usuarios -->
+                    <% if(currentUser.getRole().equals("administrator")) { %>
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Usuarios</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="index?page=account&action=create" class="nav-link px-0"> <span class="d-none d-sm-inline">Nuevo Usuario</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="index?page=account&action=list" class="nav-link px-0"> <span class="d-none d-sm-inline">Listado</span></a>
+                            </li>
+                            <li>
+                                <a href="index?page=account&action=admin" class="nav-link px-0"> <span class="d-none d-sm-inline">Administrar usuarios</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>

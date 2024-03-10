@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import model.entity.Account;
 import model.entity.Customer;
 import model.entity.User;
 
@@ -62,7 +64,19 @@ public class Utilities {
      * @return Usuario
      */
     public static User userFromHash(@SuppressWarnings("rawtypes") HashMap hash) {
-        return new User(hash.get("name").toString(), hash.get("email").toString(), hash.get("password").toString());
+        return new User(hash.get("name").toString(), hash.get("email").toString(),hash.get("role").toString(), hash.get("password").toString());
+    }
+
+    /**
+     * Convertir hashMap a Account
+     * 
+     * @Autor Vivian Martínez
+     * @param hash
+     * @return Account
+     */
+    public static Account accountFromHash(@SuppressWarnings("rawtypes") HashMap hash) {
+        Long number_account = Long.parseLong(hash.get("account_number").toString());
+        return new Account((int) hash.get("customer_id"), (int) hash.get("type_account_id"),number_account,Double.parseDouble(hash.get("balance").toString()), Boolean.parseBoolean(hash.get("active").toString()));
     }
 
     public static long generateAccountNumber(ArrayList<HashMap> data) {

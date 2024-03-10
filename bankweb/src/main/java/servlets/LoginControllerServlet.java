@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.util.HashMap;
-
 import controller.UserController;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

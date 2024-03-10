@@ -2,10 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import model.dao.UserDAO;
 import model.entity.Entity;
-import model.entity.User;
 import utilities.Utilities;
 
 public class UserController implements Controller {
@@ -23,8 +21,8 @@ public class UserController implements Controller {
 
     @Override
     public ArrayList<Entity> list() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'list'");
+        ArrayList<Entity> result = this.userDAO.findAll();
+        return result;
     }
 
     /**
@@ -38,7 +36,11 @@ public class UserController implements Controller {
     @Override
     public Entity getOne(HashMap params) {
         ArrayList<HashMap> find = this.userDAO.findBy(params);
-        return Utilities.userFromHash(find.get(0));
+        if (find.size() > 0) {
+            // convierto el elemento obtenido del hash en entidad cuenta
+            return Utilities.userFromHash(find.get(0));
+        }
+        return null;
     }
 
 }

@@ -7,10 +7,7 @@ import model.entity.Entity;
 
 public interface Dao {
     public void create(Entity entity);
-
     public ArrayList<Entity> findAll();
-
     public Entity findOne(int id);
-
     public ArrayList<HashMap> findBy(HashMap whereParamValue);
 }

@@ -21,14 +21,14 @@
               <form action="login" method="post">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3" class="form-control" name="userEmail"/>
-                  <label class="form-label" for="form3Example3">Email address</label>
+                  <input type="email" id="userEmail" class="form-control" name="userEmail"/>
+                  <label class="form-label" for="userEmail">Email address</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4" class="form-control" name="userPassword"  />
-                  <label class="form-label" for="form3Example4">Password</label>
+                  <input type="password" id="passwordId" class="form-control" name="userPassword"  />
+                  <label class="form-label" for="passwordId">Password</label>
                 </div>
 
                 <!-- Submit button -->

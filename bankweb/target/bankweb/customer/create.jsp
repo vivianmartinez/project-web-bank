@@ -34,9 +34,11 @@
         </div>
         <div class="col-md-4">
             <label for="inputAccountType" class="form-label">Tipo de Cuenta</label>
-            <select id="inputAccountType" class="form-select">
-            <option selected>Seleccione opción</option>
-            <option>...</option>
+            <select id="inputAccountType" class="form-select" name ="selectTypeAccount">
+            <option selected>Seleccione tipo</option>
+                <option value = "1">Ahorro</option>
+                <option value = "2">Corriente</option>
+
             </select>
         </div>
         <div class="col-12">
