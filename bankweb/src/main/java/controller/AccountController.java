@@ -10,10 +10,9 @@ public class AccountController implements Controller {
 
     AccountDAO accountDAO = new AccountDAO();
 
-    @Override
+
     public void create(Entity entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        this.accountDAO.create(entity);
     }
 
     @Override

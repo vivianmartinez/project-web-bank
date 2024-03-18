@@ -13,7 +13,6 @@ public class UserController implements Controller {
         this.userDAO = new UserDAO();
     }
 
-    @Override
     public void create(Entity entity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'create'");

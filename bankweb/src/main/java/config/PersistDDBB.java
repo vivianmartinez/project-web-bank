@@ -173,10 +173,13 @@ public class PersistDDBB {
                 if (method.getName().startsWith("get")) {
                     Object property_value = new Object();
                     try {
-                        // getName
+                        // obtengo los valores al invocar sus getters
                         property_value = method.invoke(entity);
+                        // si el valor no es nulo y es diferente del Id
                         if (property_value != null && method.getName() != "getId") {
+                            //concateno nombre de las columnas
                             columns = columns.concat(method.getName().substring(3).toLowerCase()).concat(",");
+                            //concateno los parámetros ?
                             params = params.concat("?,");
                         }
                     } catch (IllegalAccessException e) {
@@ -188,8 +191,11 @@ public class PersistDDBB {
             }
             columns = columns.substring(0, columns.length() - 1) + ") ";
             params = params.substring(0, params.length() - 1) + ")";
+            //agrego los string con columnas y parámetros a la sentencia sql
             sql = sql.concat(columns).concat(params);
-
+            //utilizo método para setear los parámetros de la sentencia
+            PreparedStatement stmt = setParametersPreparedStatement(entity, sql, true);
+            /*
             PreparedStatement stmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int num_param = 0;
             for (Method method : entity.getClass().getDeclaredMethods()) {
@@ -229,6 +235,7 @@ public class PersistDDBB {
                     }
                 }
             }
+            */
             int affectedRow = stmt.executeUpdate();
             ResultSet rsGeneratedKeys = stmt.getGeneratedKeys();
             if (rsGeneratedKeys.next()) {
@@ -248,7 +255,7 @@ public class PersistDDBB {
      * @Author Vivian Martínez
      * @param entity Entidad con propiedades seteadas
      * @throws SQLException
-     * @throws InvalidInsertSQLException
+     * @throws InvalidUpdateSQLException
      */
     public int executeStatementPreparedSQLUpdate(Entity entity) throws SQLException, InvalidUpdateSQLException {
         System.out.println("actualizar");
@@ -283,7 +290,7 @@ public class PersistDDBB {
                 columns = columns.substring(0, columns.length() - 1);
                 sql = sql.concat(columns).concat(where);
                 System.out.println(sql);
-                PreparedStatement stmt = setParametersPreparedStatement(entity, sql);
+                PreparedStatement stmt = setParametersPreparedStatement(entity, sql, false);
                 // getParametersMetaData para obtener la cantidad de parámetros que se pasan
                 stmt.setInt(stmt.getParameterMetaData().getParameterCount(), idUpdate);
 
@@ -300,17 +307,22 @@ public class PersistDDBB {
     }
 
     /**
-     * Devuelve la sentencia preparada con los parámetros seteados de acuerdo al
-     * tipo
+     * Devuelve la sentencia preparada con los parámetros seteados de acuerdo al tipo
      * 
      * @Author Vivian Martínez
-     * @param entity
-     * @param sql
-     * @return Prepare Statement with parameters with set parameters
+     * @param entity Entity - Entidad con sus propiedades seteadas
+     * @param sql String - sentencia sql preparada
+     * @param lastInsertId Boolean - true o false si necesita que la sentencia devuelva el id del último registro insertado en la tabla 
+     * @return Prepare Statement with set parameters
      * @throws SQLException
      */
-    public PreparedStatement setParametersPreparedStatement(Entity entity, String sql) throws SQLException {
+    public PreparedStatement setParametersPreparedStatement(Entity entity, String sql, Boolean lastInsertId) throws SQLException {
         PreparedStatement stmt = this.connection.prepareStatement(sql);
+        //si necesito obtener el id del último registro insertado
+        if(lastInsertId){
+            stmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        }
+        
         int num_param = 0;
         for (Method method : entity.getClass().getDeclaredMethods()) {
             if (method.getName().startsWith("get")) {
@@ -380,6 +392,13 @@ public class PersistDDBB {
         return false;
     }
 
+    /**
+     * Realiza transacción entidades Customer y Account
+     * @Author Vivian Martínez
+     * @param entities Array que contenga en índice 0 cliente - índice 1 cuenta
+     * @return Array List con ids de cliente y cuenta respectivamente creados
+     * @throws InvalidInsertSQLException
+     */
     public ArrayList<Integer> executeTransactionEntities(ArrayList<Entity> entities) throws InvalidInsertSQLException {
         ArrayList<Integer> lastInserts = new ArrayList<>();
         try {

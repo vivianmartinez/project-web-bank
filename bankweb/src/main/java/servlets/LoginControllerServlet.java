@@ -49,7 +49,6 @@ public class LoginControllerServlet extends HttpServlet {
         HashMap params = new HashMap<>();
         String email = request.getParameter("userEmail");
         String password = request.getParameter("userPassword");
-        System.out.println(password);
         params.put("email", email);
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         if (!email.isEmpty() && !password.isEmpty()) {
@@ -59,7 +58,6 @@ public class LoginControllerServlet extends HttpServlet {
                 User user = (User) findUser;
 
                 if (user.getPassword().equals(password)) {
-                    System.out.println(user.getPassword());
                     loguedIn.setAttribute("currentUser", user);
                     dispatcher = request.getRequestDispatcher("home.jsp");
                 }

@@ -12,25 +12,20 @@ import validator.customexceptions.InvalidInsertSQLException;
 public class CustomerDAO implements Dao {
 
     private PersistDDBB persistDDBB;
+    private AccountDAO accountDAO;
 
     public CustomerDAO() {
         this.persistDDBB = new PersistDDBB();
+        this.accountDAO = new AccountDAO();
     }
 
-    @Override
-    public void create(Entity entity) {
+    
+    public void create(Entity entity, Account account) {
         Customer customer = (Customer) entity;
         ArrayList<Entity> entities = new ArrayList<>();
         entities.add(customer);
-        ArrayList<HashMap> data_account = this.persistDDBB.executeSelectSQL(
-                "SELECT COALESCE(MAX(account_number),1000000000) AS account_number FROM account");
-        long account_number = Utilities.generateAccountNumber(data_account); // pendiente
-        Account account = new Account();
-        account.setAccount_number(account_number);
-        account.setBalance(0.00);
-        account.setActive(true);
-        account.setType_account_id(1);
-        entities.add(account);
+        Account createAccount = this.accountDAO.generateAccount(account);
+        entities.add(createAccount);
 
         int insertCustomerId = 0;
         ArrayList<Integer> idsInserts = new ArrayList<>();
@@ -43,7 +38,6 @@ public class CustomerDAO implements Dao {
                 System.out.println("Something bad happend. Couldn\'t create customer.");
             }
         } catch (InvalidInsertSQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -26,6 +26,19 @@ public class Utilities {
     }
 
     /**
+     * convertir String a LocalDate
+     * 
+     * @Autor Vivian Martínez
+     * @param date
+     * @return LocalDate
+     */
+    public static LocalDate convertStringToLocalDateFormatSlash(String date) {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder().append(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                .toFormatter();
+        LocalDate dateConverted = LocalDate.parse(date, formatter);
+        return dateConverted;
+    }
+    /**
      * convertir LocalDate to String
      * 
      * @Autor Vivian Martínez
@@ -46,13 +59,11 @@ public class Utilities {
      * @return Customer
      */
     public static Customer customerFromHash(@SuppressWarnings("rawtypes") HashMap hash) {
-        // defino una fecha default si no se ingresa fecha - pero haré validación para
-        // que la fecha de nacimiento sea obligatoria
-        LocalDate dateB = convertStringToLocalDate("1900-01-01");
+        LocalDate dateB = convertStringToLocalDate(hash.get("date_birth").toString());
         return new Customer(
                 hash.get("dni").toString(), hash.get("name").toString(), hash.get("last_name").toString(),
                 hash.get("city").toString(),
-                hash.get("date_birth") == null ? dateB : convertStringToLocalDate(hash.get("date_birth").toString()),
+                dateB,
                 hash.get("email").toString(), hash.get("password").toString());
     }
 

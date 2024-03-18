@@ -3,15 +3,16 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.dao.CustomerDAO;
+import model.entity.Account;
 import model.entity.Entity;
 import utilities.Utilities;
 
 public class CustomerController implements Controller {
     private CustomerDAO customerDAO = new CustomerDAO();
 
-    @Override
-    public void create(Entity entity) {
-
+    public void create(Entity entityCustomer, Entity entityAccount) {
+        Account account = (Account) entityAccount;
+        this.customerDAO.create(entityCustomer, account);
     }
 
     @Override
