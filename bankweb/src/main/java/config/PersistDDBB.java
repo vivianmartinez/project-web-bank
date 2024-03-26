@@ -398,24 +398,22 @@ public class PersistDDBB {
      * @param entities Array que contenga en índice 0 cliente - índice 1 cuenta
      * @return Array List con ids de cliente y cuenta respectivamente creados
      * @throws InvalidInsertSQLException
+     * @throws SQLException 
      */
-    public ArrayList<Integer> executeTransactionEntities(ArrayList<Entity> entities) throws InvalidInsertSQLException {
+    public ArrayList<Integer> executeTransactionEntities(ArrayList<Entity> entities) throws InvalidInsertSQLException, SQLException {
         ArrayList<Integer> lastInserts = new ArrayList<>();
-        try {
-            this.connection.setAutoCommit(false);
-            int idInsert = this.executeStatementPreparedSQLInsert(entities.get(0));
-            lastInserts.add(idInsert);
-            if (idInsert != 0) {
-                if (entities.get(1) instanceof Account) {
-                    ((Account) entities.get(1)).setCustomer_id(idInsert);
-                }
-
-                lastInserts.add(this.executeStatementPreparedSQLInsert(entities.get(1)));
+        this.connection.setAutoCommit(false);
+        int idInsert = this.executeStatementPreparedSQLInsert(entities.get(0));
+        lastInserts.add(idInsert);
+        if (idInsert != 0) {
+            if (entities.get(1) instanceof Account) {
+                ((Account) entities.get(1)).setCustomer_id(idInsert);
             }
-            this.connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            lastInserts.add(this.executeStatementPreparedSQLInsert(entities.get(1)));
         }
+        this.connection.commit();
+  
         return lastInserts;
     }
 

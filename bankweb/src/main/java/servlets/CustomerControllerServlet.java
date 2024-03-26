@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import model.entity.Customer;
 import utilities.Utilities;
 import validator.EntityValidator;
 import validator.customexceptions.CustomerValidator;
+import validator.customexceptions.InvalidInsertSQLException;
 
 @WebServlet("/customercontroller")
 public class CustomerControllerServlet extends HttpServlet {
@@ -64,7 +66,7 @@ public class CustomerControllerServlet extends HttpServlet {
                 : null;
         int typeAccount = request.getParameter("selectTypeAccount") != "0"
                 ? Integer.parseInt(request.getParameter("selectTypeAccount"))
-                : null;
+                : 0;
 
         // creamos un cliente
         Customer customer = new Customer(dni, name, lastName, city, dateBirth, email, password);
@@ -75,10 +77,23 @@ public class CustomerControllerServlet extends HttpServlet {
             Account account = new Account();
             account.setActive(true);
             account.setBalance(0.0);
-            account.setType_account_id(typeAccount);
-            // llamamos al controlador de cliente
-            this.customerController.create(customer, account);
-            request.setAttribute("message_create_customer", "Cliente creado correctamente.");
+            //validar que ingrese tipo de cuenta
+            if(typeAccount != 0){
+                account.setType_account_id(typeAccount);
+                // llamamos al controlador de cliente
+                try {
+                    this.customerController.create(customer, account);
+                    request.setAttribute("message_create_customer", "Cliente creado correctamente.");
+                } catch (InvalidInsertSQLException e) {
+                    //e.printStackTrace();
+                    request.setAttribute("message_create_customer", "Something bad happened.");
+                } catch (SQLException e) {
+                    request.setAttribute("message_create_customer", "Something bad happened.");
+                }
+                
+            }else{
+                request.setAttribute("message_create_customer", "Debe seleccionar el tipo de cuenta");
+            }            
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

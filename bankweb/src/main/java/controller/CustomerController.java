@@ -1,16 +1,18 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.dao.CustomerDAO;
 import model.entity.Account;
 import model.entity.Entity;
 import utilities.Utilities;
+import validator.customexceptions.InvalidInsertSQLException;
 
 public class CustomerController implements Controller {
     private CustomerDAO customerDAO = new CustomerDAO();
 
-    public void create(Entity entityCustomer, Entity entityAccount) {
+    public void create(Entity entityCustomer, Entity entityAccount) throws InvalidInsertSQLException, SQLException {
         Account account = (Account) entityAccount;
         this.customerDAO.create(entityCustomer, account);
     }

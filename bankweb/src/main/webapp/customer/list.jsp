@@ -4,6 +4,13 @@
 <%@ page import="model.entity.Customer"%>
 <main>
     <%@include file="../menu.jsp" %>
+
+    <div>
+        <form class="d-inline-flex col-6 my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Cliente" aria-label="Search" id="searchCustomer">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+    </div>
     <!-- Listado de clientes       -->
     <div class="container-md py-5">
         <table class="table table-hover">

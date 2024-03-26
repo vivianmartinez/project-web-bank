@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import config.PersistDDBB;
@@ -20,7 +21,7 @@ public class CustomerDAO implements Dao {
     }
 
     
-    public void create(Entity entity, Account account) {
+    public void create(Entity entity, Account account) throws InvalidInsertSQLException, SQLException {
         Customer customer = (Customer) entity;
         ArrayList<Entity> entities = new ArrayList<>();
         entities.add(customer);
@@ -29,17 +30,15 @@ public class CustomerDAO implements Dao {
 
         int insertCustomerId = 0;
         ArrayList<Integer> idsInserts = new ArrayList<>();
-        try {
-            idsInserts = this.persistDDBB.executeTransactionEntities(entities);
-            insertCustomerId = idsInserts.get(0);
-            if (insertCustomerId != 0) {
-                System.out.println("Cliente y cuenta creados con éxito");
-            } else {
-                System.out.println("Something bad happend. Couldn\'t create customer.");
-            }
-        } catch (InvalidInsertSQLException e) {
-            e.printStackTrace();
+    
+        idsInserts = this.persistDDBB.executeTransactionEntities(entities);
+        insertCustomerId = idsInserts.get(0);
+        if (insertCustomerId != 0) {
+            System.out.println("Cliente y cuenta creados con éxito");
+        } else {
+            System.out.println("Something bad happend. Couldn\'t create customer.");
         }
+      
     }
 
     @Override

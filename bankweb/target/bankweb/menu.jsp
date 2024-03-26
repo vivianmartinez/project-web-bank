@@ -46,7 +46,7 @@
                         </ul>
                     </li>
                     <!-- si es administrador puede administrar usuarios -->
-                    <% if(currentUser.getRole().equals("administrator")) { %>
+                    <% if(currentUser != null && currentUser.getRole().equals("administrator")) { %>
                     <li>
                         <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Usuarios</span></a>
